@@ -40,41 +40,18 @@
         </ListView>
         <RadioButton Content="連番で保存&#xA;"  Name="renban" Margin="10,63,44,0" VerticalAlignment="Top" Height="21" Checked="RadioButton_Checked" Grid.ColumnSpan="2"/>
         <RadioButton Name="select" Content="選択して写真を保存" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Height="15" Width="128" Grid.ColumnSpan="2"/>
-        <Button Content="戻る" x:Name="Back" Margin="125,19,101,0" VerticalAlignment="Top" Click="Button_Click_1" Height="25" Grid.Column="3" >
-            <Button.Foreground>
-                <ImageBrush/>
-            </Button.Foreground>
-            <Button.BorderBrush>
-                <ImageBrush/>
-            </Button.BorderBrush>
-            <Button.Background>
-                <ImageBrush Stretch="Uniform" ImageSource="矢印ボタン　左1.png"/>
-            </Button.Background>
+        <Button Content="↩" x:Name="Back" Margin="175,21,77,0" VerticalAlignment="Top" Click="Button_Click_1" Height="25" Grid.Column="3" MinWidth="32" MinHeight="25" MaxWidth="32" MaxHeight="25" Style="{DynamicResource ButtonStyle1}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" FontSize="20" RenderTransformOrigin="0.5,0.5" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.492"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
         </Button>
-        <Button Content="" Margin="215,19,11,0" VerticalAlignment="Top" Click="Button_Click_2" Height="25" Grid.Column="3" BorderBrush="{x:Null}" Foreground="{x:Null}">
-            <Button.Background>
-                <ImageBrush ImageSource="矢印ボタン　右1.png" Stretch="Uniform"/>
-            </Button.Background>
-        </Button>
-        <Button Content="" Margin="182,19,44,0" VerticalAlignment="Top" Click="Button_Click_3" Height="25" Grid.Column="3" Foreground="White" RenderTransformOrigin="0.538,0.48">
-            <Button.BorderBrush>
-                <ImageBrush/>
-            </Button.BorderBrush>
-            <Button.Background>
-                <ImageBrush ImageSource="細いバツのアイコン.png" Stretch="Uniform"/>
-            </Button.Background>
-        </Button>
-        <Button Content="再読み込み" Margin="153,19,72,0" VerticalAlignment="Top" Click="Button_Click_4" Height="25" Grid.Column="3">
-            <Button.Foreground>
-                <ImageBrush/>
-            </Button.Foreground>
-            <Button.BorderBrush>
-                <ImageBrush/>
-            </Button.BorderBrush>
-            <Button.Background>
-                <ImageBrush ImageSource="リロードのフリーアイコン (1).png" Stretch="Uniform"/>
-            </Button.Background>
-        </Button>
+        <Button Content="↪" Margin="239,20,10,0" VerticalAlignment="Top" Click="Button_Click_2" Height="25" Grid.Column="3" BorderBrush="{x:Null}" Foreground="Black" MaxWidth="32" MaxHeight="25" MinWidth="32" MinHeight="25" Background="{x:Null}" FontSize="20"/>
+        <Button Content="↺" Margin="207,14,45,0" VerticalAlignment="Top" Click="Button_Click_4" Height="33" MinWidth="32" MinHeight="25" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" FontSize="24" Grid.Column="3"/>
         <Button Content="取得" x:Name="run" Margin="34,345,38,0" VerticalAlignment="Top" Click="Button_Click_5" Height="29" MinWidth="75" MinHeight="20" Grid.Column="1"/>
         <CheckBox Content="zipで写真をまとめる" x:Name="zip" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="28" Width="128" Grid.ColumnSpan="2" />
         <Label Content="取得URL一覧" Margin="10,418,0,225" HorizontalAlignment="Left" Width="79" Grid.ColumnSpan="2"/>

@@ -9,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 
-// フォルダー選択ダイアログの名前空間を
-
 namespace WebPhotoDownloader
 {
 

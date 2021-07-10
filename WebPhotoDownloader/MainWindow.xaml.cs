@@ -29,7 +29,7 @@ namespace WebPhotoDownloader
             //addressBar.Text = "https://google.com";
 
             cancel.IsEnabled = false;
-            
+
 
 
 
@@ -184,6 +184,24 @@ namespace WebPhotoDownloader
             //URLからストリームを取得
             System.IO.Stream st = wc.OpenRead(wv.CoreWebView2.Source);
 
+
+            if (File.Exists(@"./tempFolder.txt"))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("設定から一時ファイルの保存先を指定してください。");
+                zip.IsChecked = false;
+                renban.IsChecked = false;
+                cancel.IsEnabled = false;
+                run.IsEnabled = true;
+
+                return;
+            }
+
+
+
             //エンコード
             Encoding enc = System.Text.Encoding.GetEncoding("UTF-8");
             System.IO.StreamReader sr = new System.IO.StreamReader(st, enc);
@@ -203,6 +221,7 @@ namespace WebPhotoDownloader
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
             HtmlAgilityPack.HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//img");
+
 
             var browser = new System.Windows.Forms.FolderBrowserDialog();
 
@@ -247,7 +266,7 @@ namespace WebPhotoDownloader
 
 
 
-                        if (zip.IsChecked == true && renban.IsChecked != true && select.IsChecked != true)
+                        if (zip.IsChecked == true && renban.IsChecked != true)
                         {
 
 
@@ -266,11 +285,14 @@ namespace WebPhotoDownloader
                             wc2.DownloadFileAsync(new Uri(lvi), fullPath);
                             file.Content = photoName + "をダウンロードしています。";
 
+
+
                             i++;
 
                         }
                         else if (zip.IsChecked == true && renban.IsChecked == true)
                         {
+
 
                             StreamReader SR = new StreamReader("./tempFolder.txt", Encoding.GetEncoding("Shift_JIS"));
                             string temp = SR.ReadToEnd();
@@ -289,6 +311,8 @@ namespace WebPhotoDownloader
                             wc2.DownloadFileAsync(new Uri(lvi), fullPath);
 
                             file.Content = photoName + "をダウンロードしています。";
+
+
                             i++;
                         }
 
@@ -296,7 +320,7 @@ namespace WebPhotoDownloader
 
 
 
-                        if (zip.IsChecked == false && renban.IsChecked != true && select.IsChecked != true)
+                        if (zip.IsChecked == false && renban.IsChecked != true)
                         {
 
                             string ex = System.IO.Path.GetExtension(lvi);
@@ -307,6 +331,7 @@ namespace WebPhotoDownloader
                             wc2.DownloadFileAsync(new Uri(lvi), fullPath);
 
                             file.Content = photoName + "をダウンロードしています。";
+
 
 
                         }
@@ -327,8 +352,10 @@ namespace WebPhotoDownloader
 
                 }
 
+
+
             }
-            else if(browser.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            else if (browser.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
             {
                 cancel.IsEnabled = false;
                 run.IsEnabled = true;
@@ -392,7 +419,10 @@ namespace WebPhotoDownloader
                 prog.Value = 0;
                 pro.Content = "0" + "%";
                 MessageBox.Show("キャンセルされました。");
-                wc2.Dispose();
+                wc2.CancelAsync();
+
+                //fileDelete(tempFile());
+
             }
 
 
@@ -428,12 +458,7 @@ namespace WebPhotoDownloader
 
 
                     //zip作成
-                    StreamReader SR = new StreamReader("./tempFolder.txt", Encoding.GetEncoding("Shift_JIS"));
-                    string temp = SR.ReadToEnd();
-                    string replace = temp.Replace("\n", "");
-                    string tempfile = replace.Replace("\r", "");
-
-
+                    string tempfile = tempFile();
 
                     System.IO.Compression.ZipFile.CreateFromDirectory(tempfile + "\\", save.Content + "\\" + sanitized + ".zip");
                     MessageBox.Show("ダウンロードが終わりました", "終了", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -448,14 +473,7 @@ namespace WebPhotoDownloader
                     i = 0;
                     prog.Value = 0;
 
-                    //一時ファイルを削除
-                    string[] filePaths = Directory.GetFiles(tempfile);
-                    foreach (string f in filePaths)
-                    {
-                        File.SetAttributes(f, FileAttributes.Normal);
-                        File.Delete(f);
-                    }
-
+                    fileDelete(tempfile);
 
                 }
                 else
@@ -474,6 +492,25 @@ namespace WebPhotoDownloader
             }
         }
 
+        private static string tempFile()
+        {
+            StreamReader SR = new StreamReader("./tempFolder.txt", Encoding.GetEncoding("Shift_JIS"));
+            string temp = SR.ReadToEnd();
+            string replace = temp.Replace("\n", "");
+            string tempfile = replace.Replace("\r", "");
+            return tempfile;
+        }
+
+        private static void fileDelete(string tempfile)
+        {
+            //一時ファイルを削除
+            string[] filePaths = Directory.GetFiles(tempfile);
+            foreach (string f in filePaths)
+            {
+                File.SetAttributes(f, FileAttributes.Normal);
+                File.Delete(f);
+            }
+        }
 
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -486,6 +523,11 @@ namespace WebPhotoDownloader
         {
             zip.IsChecked = false;
             renban.IsChecked = false;
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.daccho-it.com/");
         }
     }
 }

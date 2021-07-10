@@ -12,8 +12,5 @@
         <Button Content="選択"  Name="select" HorizontalAlignment="Left" Margin="355,13,0,0" VerticalAlignment="Top" Width="55" Height="23" Click="Button_Click"/>
         <Button Content="終了" Margin="340,213,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="Button_Click_1"/>
         <Button Content="OK" HorizontalAlignment="Left" Margin="249,213,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
-        <Label Content="ファイルの保存先" Margin="10,41,306,0" VerticalAlignment="Top"/>
-        <TextBox Name="save" HorizontalAlignment="Left" Height="23" Margin="119,45,0,0" TextWrapping="Wrap" Text="ここにファイルパスを入力するか選択してください。" VerticalAlignment="Top" Width="231"/>
-        <Button Content="選択" HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" Margin="355,45,0,0" Height="22" Click="Button_Click_3"/>
     </Grid>
 </Window>

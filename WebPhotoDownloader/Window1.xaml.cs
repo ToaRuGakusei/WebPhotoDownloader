@@ -38,7 +38,7 @@ namespace WebPhotoDownloader
                 string temp = SR.ReadToEnd();
                 string replace = temp.Replace("\n", "");
                 string tempfile = replace.Replace("\r", "");
-                save.Text = tempfile;
+                
                 SR.Close();
             }
             else

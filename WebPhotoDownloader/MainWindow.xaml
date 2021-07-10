@@ -6,22 +6,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WebPhotoDownloader"
         mc:Ignorable="d"
-        Title="Web写真ダウンローダー" Height="790" Width="1366">
-    <Grid KeyDown="Grid_KeyDown" Margin="0">
+        Title="Web写真ダウンローダー" Height="790" Width="1366" MinWidth="1366" MinHeight="790" MaxWidth="1920" MaxHeight="1080">
+    <Grid KeyDown="Grid_KeyDown" Margin="0" MaxWidth="1920" MaxHeight="1080">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="160*"/>
-            <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="1135*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="183*"/>
+            <ColumnDefinition Width="1145*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="223*"/>
-            <RowDefinition Height="28*"/>
+            <RowDefinition Height="239*"/>
+            <RowDefinition Height="14*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="addressBar" Height="23" Margin="285,19,119,0" TextWrapping="Wrap" Text="URLを入力してください" KeyDown="addressBar_KeyDown" TextInput="addressBar_TextInput" KeyUp="addressBar_KeyUp" FlowDirection="LeftToRight" HorizontalContentAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Grid.Column="3"/>
-        <Button Content="Go!" Margin="0,19,1,0" Width="99" Click="Button_Click" Height="23" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" RenderTransformOrigin="2.596,-1.674" Grid.Column="3"/>
-        <wv2:WebView2 Name="wv" Source="https://toaru-web.net/2021/06/10/%e3%82%b5%e3%82%a4%e3%83%88%e4%b8%80%e8%a6%a7/" Margin="5,49,1,49" NavigationStarting="wv_NavigationStarting_1" NavigationCompleted="wv_NavigationCompleted" Grid.RowSpan="2" Grid.Column="3"  >
+        <TextBox x:Name="addressBar" Height="23" Margin="285,19,129,0" TextWrapping="Wrap" Text="URLを入力してください" KeyDown="addressBar_KeyDown" TextInput="addressBar_TextInput" KeyUp="addressBar_KeyUp" FlowDirection="LeftToRight" HorizontalContentAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Grid.Column="2"/>
+        <Button Content="Go!" Margin="0,19,11,0" Width="99" Click="Button_Click" Height="23" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" RenderTransformOrigin="2.596,-1.674" Grid.Column="2"/>
+        <wv2:WebView2 Name="wv" Source="https://toaru-web.net/2021/06/10/%e3%82%b5%e3%82%a4%e3%83%88%e4%b8%80%e8%a6%a7/" Margin="5,49,11,0" NavigationStarting="wv_NavigationStarting_1" NavigationCompleted="wv_NavigationCompleted" Grid.Column="2"  >
             <wv2:WebView2.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -29,16 +27,15 @@
                 </LinearGradientBrush>
             </wv2:WebView2.OpacityMask>
         </wv2:WebView2>
-        <ListView Name="ls1" Margin="10,449,0,54" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <ListView Name="ls1" Margin="10,449,0,12" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="180">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <RadioButton Content="連番で保存&#xA;"  Name="renban" Margin="10,63,44,0" VerticalAlignment="Top" Height="21" Checked="RadioButton_Checked" Grid.ColumnSpan="2"/>
-        <RadioButton Name="select" Content="選択して写真を保存" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Height="15" Width="128" Grid.ColumnSpan="2"/>
-        <Button Content="↩" x:Name="Back" Margin="175,21,928,0" VerticalAlignment="Top" Click="Button_Click_1" Height="25" Grid.Column="3" MinWidth="32" MinHeight="25" MaxWidth="32" MaxHeight="25" Style="{DynamicResource ButtonStyle1}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" FontSize="20" RenderTransformOrigin="0.5,0.5" >
+        <RadioButton Content="連番で保存&#xA;"  Name="renban" Margin="14,63,63,0" VerticalAlignment="Top" Height="21" Checked="RadioButton_Checked" Grid.ColumnSpan="2"/>
+        <Button Content="↩" x:Name="Back" Margin="175,21,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="25" Grid.Column="2" MinWidth="32" MinHeight="25" MaxWidth="32" MaxHeight="25" Style="{DynamicResource ButtonStyle1}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" FontSize="20" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="32" >
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -48,13 +45,13 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button Content="↪" Margin="239,20,861,0" VerticalAlignment="Top" Click="Button_Click_2" Height="25" Grid.Column="3" BorderBrush="{x:Null}" Foreground="Black" MaxWidth="32" MaxHeight="25" MinWidth="32" MinHeight="25" Background="{x:Null}" FontSize="20"/>
-        <Button Content="↺" Margin="207,14,896,0" VerticalAlignment="Top" Click="Button_Click_4" Height="33" MinWidth="32" MinHeight="25" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" FontSize="24" Grid.Column="3"/>
-        <Button Content="取得" x:Name="run" Margin="34,345,38,0" VerticalAlignment="Top" Click="Button_Click_5" Height="29" MinWidth="75" MinHeight="20" Grid.Column="1"/>
+        <Button Content="↪" Margin="239,20,0,0" VerticalAlignment="Top" Click="Button_Click_2" Height="25" Grid.Column="2" BorderBrush="{x:Null}" Foreground="Black" MaxWidth="32" MaxHeight="25" MinWidth="32" MinHeight="25" Background="{x:Null}" FontSize="20" HorizontalAlignment="Left" Width="35"/>
+        <Button Content="↺" Margin="207,14,0,0" VerticalAlignment="Top" Click="Button_Click_4" Height="33" MinWidth="32" MinHeight="25" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" FontSize="24" Grid.Column="2" HorizontalAlignment="Left" Width="32"/>
+        <Button Content="取得" x:Name="run" Margin="34,345,0,0" VerticalAlignment="Top" Click="Button_Click_5" Height="29" MinWidth="75" MinHeight="20" Grid.Column="1" MaxWidth="88" MaxHeight="30" HorizontalAlignment="Left" Width="88"/>
         <CheckBox Content="zipで写真をまとめる" x:Name="zip" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="28" Width="128" Grid.ColumnSpan="2" />
         <Label Content="取得URL一覧" Margin="10,418,0,225" HorizontalAlignment="Left" Width="79" Grid.ColumnSpan="2"/>
-        <Label Content="０%&#xD;&#xA;" x:Name="pro" Margin="0,0,179,6" Grid.Column="3" Grid.Row="1" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" FontSize="18"/>
-        <ProgressBar x:Name="prog" Margin="0,0,8,15" Grid.Column="3" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Height="26" VerticalAlignment="Bottom" Width="177" HorizontalAlignment="Right">
+        <Label Content="０%&#xD;&#xA;" x:Name="pro" Margin="0,0,202,-2" Grid.Column="2" HorizontalAlignment="Right" Width="50" FontSize="18" Grid.Row="1" Height="38" VerticalAlignment="Bottom"/>
+        <ProgressBar x:Name="prog" Margin="0,0,16,8" Grid.Column="2" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Width="176" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
@@ -64,14 +61,16 @@
                 </TransformGroup>
             </ProgressBar.RenderTransform>
         </ProgressBar>
-        <Button Content="キャンセル" x:Name="cancel" Margin="34,374,38,0" VerticalAlignment="Top" Click="Button_Click_6" Height="30" MinWidth="75" MinHeight="20" Grid.Column="1"/>
-        <Label Content="" Name ="file" Grid.Column="3" HorizontalAlignment="Left" Margin="151,4,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="10"/>
-        <Label Content="保存先：" Name="save" Margin="14,0,0,10" Grid.Row="1" RenderTransformOrigin="0.414,3.038" Height="28" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-        <Menu Grid.ColumnSpan="5" Height="19" VerticalAlignment="Top">
+        <Button Content="キャンセル" x:Name="cancel" Margin="34,374,0,0" VerticalAlignment="Top" Click="Button_Click_6" Height="30" MinWidth="75" MinHeight="20" Grid.Column="1" MaxWidth="88" MaxHeight="30" HorizontalAlignment="Left" Width="88"/>
+        <Label Content="" Name ="file" Grid.Column="2" HorizontalAlignment="Left" Margin="151,4,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="10"/>
+        <Label Content="保存先：" Name="save" Margin="14,0,23,10" Grid.Row="1" RenderTransformOrigin="0.414,3.038" Height="28" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+        <Menu Grid.ColumnSpan="3" Height="19" VerticalAlignment="Top">
             <MenuItem Header="設定" Click="MenuItem_Click">
 
             </MenuItem>
+            <MenuItem Header="ヘルプ" Click="MenuItem_Click_1"></MenuItem>
+
         </Menu>
-        <Button Content="選択をリセット" Margin="34,213,38,0" VerticalAlignment="Top" Click="Button_Click_7" Height="30" MinWidth="75" MinHeight="20" Grid.Column="1"/>
+        <Button Content="選択をリセット" Margin="32,89,0,0" VerticalAlignment="Top" Click="Button_Click_7" Height="30" MinWidth="88" MinHeight="30" Grid.Column="1" MaxWidth="88" MaxHeight="30" HorizontalAlignment="Left" Width="88"/>
     </Grid>
 </Window>

@@ -183,6 +183,8 @@ namespace WebPhotoDownloader
             System.Net.WebClient wc = new System.Net.WebClient();
             //URLからストリームを取得
             System.IO.Stream st = wc.OpenRead(wv.CoreWebView2.Source);
+            
+            save.Content = "保存するURL:" + wv.CoreWebView2.Source;
 
 
             if (File.Exists(@"./tempFolder.txt"))
@@ -231,7 +233,7 @@ namespace WebPhotoDownloader
 
             if (browser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                save.Content = browser.SelectedPath;
+                savePoint.Content = "保存先:" + browser.SelectedPath;
 
                 n = 0;
                 foreach (HtmlAgilityPack.HtmlNode node in nodes)
@@ -375,6 +377,7 @@ namespace WebPhotoDownloader
         private void wc2_DownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
 
+
             prog.Value = e.ProgressPercentage;
             pro.Content = e.ProgressPercentage + "%";
 
@@ -410,10 +413,12 @@ namespace WebPhotoDownloader
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
 
-            if (wc2 != null || wc != null)
+
+
+
+            if (wc2 != null)
             {
-                wc2.CancelAsync();
-                wc.CancelAsync();
+
                 cancel.IsEnabled = false;
                 run.IsEnabled = true;
                 prog.Value = 0;
@@ -430,18 +435,18 @@ namespace WebPhotoDownloader
 
         }
 
+
         private void downloadClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             i++;
-
-            if (ls1.Items.Count == i + 1)
+                    
+            if (ls1.Items.Count == i)
             {
                 if (zip.IsChecked == true)
                 {
 
-
-                    //URLからストリームを取得
-                    System.IO.Stream st = wc.OpenRead(wv.CoreWebView2.Source);
+                    string replace = Convert.ToString(save.Content).Replace("保存するURL:", "");
+                    System.IO.Stream st = wc.OpenRead((string)replace);
 
                     //エンコード
                     Encoding enc = System.Text.Encoding.GetEncoding("UTF-8");
@@ -460,7 +465,9 @@ namespace WebPhotoDownloader
                     //zip作成
                     string tempfile = tempFile();
 
-                    System.IO.Compression.ZipFile.CreateFromDirectory(tempfile + "\\", save.Content + "\\" + sanitized + ".zip");
+
+                    string replaceSavePoint = Convert.ToString(savePoint.Content).Replace("保存先:", "");
+                    System.IO.Compression.ZipFile.CreateFromDirectory(tempfile + "\\", replaceSavePoint + "\\" + sanitized + ".zip");
                     MessageBox.Show("ダウンロードが終わりました", "終了", MessageBoxButton.OK, MessageBoxImage.Information);
 
 

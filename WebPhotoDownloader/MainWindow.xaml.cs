@@ -574,12 +574,14 @@ namespace WebPhotoDownloader
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
+            
             System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
         }
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
+            AboutBox1 abForm = new AboutBox1();
+            abForm.ShowDialog();
         }
     }
 }

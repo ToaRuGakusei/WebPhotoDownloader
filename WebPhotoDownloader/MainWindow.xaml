@@ -68,7 +68,7 @@
             <MenuItem Header="設定" Click="MenuItem_Click"/>
             <MenuItem Header="ヘルプ" Click="MenuItem_Click_1">
                 <MenuItem Header="バージョン情報" HorizontalAlignment="Left" Height="34" Width="156" Margin="0,0,-40,0" Click="MenuItem_Click_3"/>
-                <MenuItem Header="アプリ情報" HorizontalAlignment="Left" Height="34" Width="156" Click="MenuItem_Click_2"/>
+                <MenuItem Header="操作方法" HorizontalAlignment="Left" Height="34" Width="156" Click="MenuItem_Click_2"/>
             </MenuItem>
 
 

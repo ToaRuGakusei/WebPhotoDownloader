@@ -8,7 +8,7 @@ using System.Windows;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("写真ダウンローダー")]
-[assembly: AssemblyDescription("誰でも簡単にサイトから写真がダウンロードできるアプリです！")]
+[assembly: AssemblyDescription("写真を簡単にまとめてダウンロードができるソフトです")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WebPhotoDownloader")]

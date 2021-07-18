@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -134,31 +135,6 @@ namespace WebPhotoDownloader
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            wv.GoBack();
-            addressBar.Text = wv.CoreWebView2.Source;
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            wv.GoForward();
-            addressBar.Text = wv.CoreWebView2.Source;
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            wv.CoreWebView2.Stop();
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            wv.Reload();
-            addressBar.Text = wv.CoreWebView2.Source;
-        }
-
-
-
         private void start_Click(object sender, RoutedEventArgs e)
         {
 
@@ -183,7 +159,7 @@ namespace WebPhotoDownloader
             System.Net.WebClient wc = new System.Net.WebClient();
             //URLからストリームを取得
             System.IO.Stream st = wc.OpenRead(wv.CoreWebView2.Source);
-            
+
             save.Content = "保存するURL:" + wv.CoreWebView2.Source;
 
 
@@ -282,9 +258,7 @@ namespace WebPhotoDownloader
                             string photoName = System.IO.Path.GetFileName(lvi);
                             string afterTitle = title.Replace("|", " ");
                             string fullPath = tempfile + "\\" + "\\" + photoName;
-                            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
-                            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
-                            wc2.DownloadFileAsync(new Uri(lvi), fullPath);
+                            fileDownload(lvi, wc2, fullPath);
                             file.Content = photoName + "をダウンロードしています。";
 
 
@@ -308,9 +282,7 @@ namespace WebPhotoDownloader
                             string photoName = System.IO.Path.GetFileName(lvi);
                             string afterTitle = title.Replace("|", " ");
                             string fullPath = tempfile + "\\" + i + ex;
-                            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
-                            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
-                            wc2.DownloadFileAsync(new Uri(lvi), fullPath);
+                            fileDownload(lvi, wc2, fullPath);
 
                             file.Content = photoName + "をダウンロードしています。";
 
@@ -328,9 +300,7 @@ namespace WebPhotoDownloader
                             string ex = System.IO.Path.GetExtension(lvi);
                             string photoName = System.IO.Path.GetFileName(lvi);
                             string fullPath = browser.SelectedPath + "\\" + photoName;
-                            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
-                            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
-                            wc2.DownloadFileAsync(new Uri(lvi), fullPath);
+                            fileDownload(lvi, wc2, fullPath);
 
                             file.Content = photoName + "をダウンロードしています。";
 
@@ -343,9 +313,7 @@ namespace WebPhotoDownloader
                             string ex = System.IO.Path.GetExtension(lvi);
                             string photoName = System.IO.Path.GetFileName(lvi);
                             string fullPath = browser.SelectedPath + "\\" + i + ex;
-                            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
-                            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
-                            wc2.DownloadFileAsync(new Uri(lvi), fullPath);
+                            fileDownload(lvi, wc2, fullPath);
 
                             file.Content = photoName + "をダウンロードしています。";
 
@@ -370,6 +338,39 @@ namespace WebPhotoDownloader
             i = 0;
         }
 
+        private void fileDownload(string lvi, System.Net.WebClient wc2, string fullPath)
+        {
+            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
+            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
+
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+            
+            Task.Run(() =>
+            {
+                
+                wc2.DownloadFileAsync(new Uri(lvi), fullPath);
+            }, token);
+            
+            if (cancel.IsEnabled == false)
+            {
+                tokenSource.Cancel();
+            }
+        }
+        private void MyAction(CancellationToken token)
+        {
+            Console.WriteLine("MyAction start.");
+
+
+
+            // キャンセルされた場合
+            if (token.IsCancellationRequested)
+            {
+                MessageBox.Show("MyAction exit.");
+            }
+
+
+        }
 
 
 
@@ -378,8 +379,9 @@ namespace WebPhotoDownloader
         {
 
 
-            prog.Value = e.ProgressPercentage;
-            pro.Content = e.ProgressPercentage + "%";
+            //prog.Value = e.ProgressPercentage;
+            //pro.Content = e.ProgressPercentage + "%";
+
 
         }
 
@@ -424,6 +426,8 @@ namespace WebPhotoDownloader
                 prog.Value = 0;
                 pro.Content = "0" + "%";
                 MessageBox.Show("キャンセルされました。");
+                ls1.Items.Clear();
+                wc2.Dispose();
                 wc2.CancelAsync();
 
                 //fileDelete(tempFile());
@@ -439,7 +443,15 @@ namespace WebPhotoDownloader
         private void downloadClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             i++;
-                    
+
+            if (e.Cancelled)
+            {
+
+                return;
+
+
+            }
+
             if (ls1.Items.Count == i)
             {
                 if (zip.IsChecked == true)
@@ -534,7 +546,30 @@ namespace WebPhotoDownloader
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.daccho-it.com/");
+            System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            wv.GoBack();
+            addressBar.Text = wv.CoreWebView2.Source;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            wv.Reload();
+            addressBar.Text = wv.CoreWebView2.Source;
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            wv.GoForward();
+            addressBar.Text = wv.CoreWebView2.Source;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            wv.CoreWebView2.Stop();
         }
     }
 }

@@ -6,11 +6,21 @@
         xmlns:local="clr-namespace:WebPhotoDownloader"
         mc:Ignorable="d"
         Title="設定" Height="274.412" Width="432.941">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid MaxWidth="800" MaxHeight="600">
         <TextBox Name="box" HorizontalAlignment="Left" Height="23" Margin="119,13,0,0" TextWrapping="Wrap" Text="ここにファイルパスを入力するか選択してください。" VerticalAlignment="Top" Width="231"/>
         <Label Content="一時ファイル保存先" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="109"/>
-        <Button Content="選択"  Name="select" HorizontalAlignment="Left" Margin="355,13,0,0" VerticalAlignment="Top" Width="55" Height="23" Click="Button_Click"/>
-        <Button Content="終了" Margin="340,213,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="Button_Click_1"/>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="249,213,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
+        <Button Content="選択"  Name="select" HorizontalAlignment="Left" Margin="355,13,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="Button_Click" FontSize="12"/>
+        <Button Content="終了" Margin="347,209,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="68" Click="Button_Click_1" Height="24" FontSize="12"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="282,209,0,0" VerticalAlignment="Top" Width="60" Click="Button_Click_2" Height="24" FontSize="12"/>
     </Grid>
 </Window>

@@ -66,7 +66,11 @@
         <Label Content="保存URL：" x:Name="save" Margin="103,0,783,6" Grid.Row="1" RenderTransformOrigin="0.414,3.038" Height="28" VerticalAlignment="Bottom" TextOptions.TextHintingMode="Animated" Grid.Column="3" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
         <Menu Grid.ColumnSpan="4" Height="47" VerticalAlignment="Top" Background="#FFEEEEEE">
             <MenuItem Header="設定" Click="MenuItem_Click"/>
-            <MenuItem Header="ヘルプ" Click="MenuItem_Click_1"/>
+            <MenuItem Header="ヘルプ" Click="MenuItem_Click_1">
+                <MenuItem Header="バージョン情報" HorizontalAlignment="Left" Height="34" Width="156" Margin="0,0,-40,0" Click="MenuItem_Click_3"/>
+                <MenuItem Header="アプリ情報" HorizontalAlignment="Left" Height="34" Width="156" Click="MenuItem_Click_2"/>
+            </MenuItem>
+
 
         </Menu>
         <Button Content="選択をリセット" Margin="26,170,53,0" VerticalAlignment="Top" Click="Button_Click_7" Height="30" MinWidth="88" MinHeight="30" Grid.Column="1" MaxWidth="88" MaxHeight="30" Background="#FFC1A7EE" FontSize="10"/>

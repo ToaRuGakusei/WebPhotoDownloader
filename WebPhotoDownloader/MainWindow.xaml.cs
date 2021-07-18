@@ -546,7 +546,7 @@ namespace WebPhotoDownloader
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
+            
         }
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
@@ -570,6 +570,16 @@ namespace WebPhotoDownloader
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             wv.CoreWebView2.Stop();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            //System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 
 namespace WebPhotoDownloader
@@ -84,7 +86,15 @@ namespace WebPhotoDownloader
             else
             {
                 addressBar.Text = "https://" + addressBar.Text;
-                wv.CoreWebView2.Navigate(addressBar.Text);
+                try
+                {
+                    wv.CoreWebView2.Navigate(addressBar.Text);
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("有効なURLを入力してください。");
+                }
+                
             }
 
             //Encoding enc = Encoding.GetEncoding("Shift_JIS");
@@ -257,7 +267,7 @@ namespace WebPhotoDownloader
                             string ex = System.IO.Path.GetExtension(lvi);
                             string photoName = System.IO.Path.GetFileName(lvi);
                             string afterTitle = title.Replace("|", " ");
-                            string fullPath = tempfile + "\\" + "\\" + photoName;
+                            string fullPath = tempfile + "\\" + "\\" + photoName;                          
                             fileDownload(lvi, wc2, fullPath);
                             file.Content = photoName + "をダウンロードしています。";
 
@@ -340,38 +350,73 @@ namespace WebPhotoDownloader
 
         private void fileDownload(string lvi, System.Net.WebClient wc2, string fullPath)
         {
-            wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
-            wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
+            //wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
+            //wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
 
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
-            
-            Task.Run(() =>
-            {
+
+
+
+
+           // var task1 = Task.Run(() =>
+            ///{
+
+
+
+
+
+                //prog.Dispatcher.Invoke(() =>
+                //{
+                wc2.DownloadProgressChanged += new System.Net.DownloadProgressChangedEventHandler(wc2_DownloadProgressChanged);
+                wc2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(downloadClient_DownloadFileCompleted);
+                try
+                {
+
+                    wc2.DownloadFileTaskAsync(new Uri(lvi), fullPath);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(Convert.ToString(e));
+                }
+                // });
+
+
+                //if (token.IsCancellationRequested)
+                //{
+                //    wc2.Dispose();
+                //   return;
+                // }
+            //}
+
+
+
+
+
+
+
+
+
+
+
+
+                //}, token);
+                // await task1;
+                // if (task1.IsCompleted)
                 
-                wc2.DownloadFileAsync(new Uri(lvi), fullPath);
-            }, token);
+                    //    MessageBox.Show("task1は終了しています");
+                    // }
+                    // else
+                    // {
+                    //     MessageBox.Show("task1は終了していません");
+                    // }
+
+                    // if (cancel.IsEnabled == false)
+                    /// {
+                    //    tokenSource.Cancel();
+                
+        }
             
-            if (cancel.IsEnabled == false)
-            {
-                tokenSource.Cancel();
-            }
-        }
-        private void MyAction(CancellationToken token)
-        {
-            Console.WriteLine("MyAction start.");
-
-
-
-            // キャンセルされた場合
-            if (token.IsCancellationRequested)
-            {
-                MessageBox.Show("MyAction exit.");
-            }
-
-
-        }
-
 
 
 
@@ -379,8 +424,8 @@ namespace WebPhotoDownloader
         {
 
 
-            //prog.Value = e.ProgressPercentage;
-            //pro.Content = e.ProgressPercentage + "%";
+            prog.Value = e.ProgressPercentage;
+            pro.Content = e.ProgressPercentage + "%";
 
 
         }
@@ -420,7 +465,6 @@ namespace WebPhotoDownloader
 
             if (wc2 != null)
             {
-
                 cancel.IsEnabled = false;
                 run.IsEnabled = true;
                 prog.Value = 0;
@@ -546,7 +590,7 @@ namespace WebPhotoDownloader
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
@@ -574,7 +618,7 @@ namespace WebPhotoDownloader
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-            
+
             System.Diagnostics.Process.Start("https://toaru-web.net/2021/07/11/photodownloader_release/");
         }
 
@@ -583,5 +627,26 @@ namespace WebPhotoDownloader
             AboutBox1 abForm = new AboutBox1();
             abForm.ShowDialog();
         }
+
+        private void addressBar_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if (addressBar.Text == "")
+            {
+                // Create an ImageBrush.
+                ImageBrush textImageBrush = new ImageBrush();
+                textImageBrush.AlignmentX = AlignmentX.Left;
+                textImageBrush.Stretch = Stretch.None;
+                // Use the brush to paint the button's background.
+                addressBar.Background = textImageBrush;
+            }
+            else
+            {
+
+                addressBar.Background = null;
+            }
+        }
     }
+        
+            
+    
 }
